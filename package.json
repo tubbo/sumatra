@@ -21,8 +21,11 @@
   "license": "MIT",
   "dependencies": {
     "jquery": "latest",
-    "coffee-script": "latest",
-    "underscore": "latest",
-    "stitch": "latest"
+    "coffee-script": "latest"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-coffee": "~0.6.0"
   }
 }
