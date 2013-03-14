@@ -9,6 +9,7 @@ task 'build:coffeescript', "Compile Sumatra into CoffeeScript", ->
   src += fs.readFileSync 'lib/sumatra/runtime.js.coffee'
   fs.writeFile 'pkg/sumatra.coffee', src, (err) ->
     throw err if err
+  true
 
 task 'build', "Compile Sumatra into both languages", ->
   invoke 'build:coffeescript'

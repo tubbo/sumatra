@@ -38,14 +38,13 @@ class @SumatraPlugin
   perform: (event) =>
     target = event.currentTarget
     throw "Error: `#{target}` has no event binding for '#{action}'."
-
 # Define a Sumatra plugin as a jQuery plugin.
 #
 # Example:
 #     sumatra 'myPlugin', ->
 #       class MyPlugin extends SumatraPlugin
+#         action: null
 #         initialize:
-#           delete @action
 #           alert 'loaded'
 @sumatra = (plugin_name, plugin_code) ->
   plugin_helper = plugin_code.apply(this)
