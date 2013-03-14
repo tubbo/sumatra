@@ -25,6 +25,11 @@ code look, well, downright ugly!
 
 ## Installation
 
+### Requirements
+
+- jQuery
+- CoffeeScript if you want to develop it..
+
 We recommend Bower for installing Sumatra as a component:
 
 ```bash
