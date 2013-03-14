@@ -16,6 +16,7 @@ module.exports = class SumatraPlugin
   # Merge `options` hash with the `defaults` as set in the definition
   # of this object. The SumatraPlugin is 
   mergeOptions: ->
+    _ = require 'underscore'
     @options = _.extend @defaults, @options
 
   # Run custom constructor code, but blocks instantiation if this method
