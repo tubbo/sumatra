@@ -113,12 +113,12 @@ $('form').ajaxSubmit \
 As a by-product of the jQuery instantation process, each `SumatraPlugin`
 comes with the following three properties, for free:
 
-- **@element:** References a single jQuery DOM Object, which can perform
+- **element:** References a single jQuery DOM Object, which can perform
   basic functionality on the page. It is obtained from the collection of
   objects which matched the plugin's selector upon instantiation.
-- **@index:** The index of the jQuery DOM Object in the collection of
+- **index:** The index of the jQuery DOM Object in the collection of
   objects which matched the plugin's selector upon instantiation.
-- **@options:** A Hash-notated Object obtained as the only argument in
+- **options:** A Hash-notated Object obtained as the only argument in
   the jQuery plugin when instantiated. This object is then merged with
   the `defaults` hash, which are default params in the plugin's
   definition, before initialization occurs.
