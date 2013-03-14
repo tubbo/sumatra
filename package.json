@@ -12,15 +12,10 @@
   },
   "keywords": [
     "jquery",
-    "plugins",
-    "beautiful",
-    "code",
     "coffee-script"
+    "plugins",
+    "framework"
   ],
   "author": "Tom Scott",
-  "license": "MIT",
-  "dependencies": {
-    "jquery": "latest",
-    "coffee-script": "latest"
-  }
+  "license": "MIT"
 }
