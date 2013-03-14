@@ -144,14 +144,23 @@ should be overridden. Any method beginning with `_` is considered
 "private" and should not be overridden. Please carry this convention
 to your own code as well.
 
-## Contributing
+## Development
+
+You can build this code into JavaScript by running the following
+command at the root dir:
+
+```bash
+$ npm install && cake build
+```
+
+### Contributions
 
 Contributions will be accepted via Git/GitHub pull requests, as long as
 you write tests that prove your contributions work. We use Jasmine to
 write tests in CoffeeScript (you know, for the actual framework?) and
 RSpec to write tests for the Rails helpers.
 
-## Releases
+### Releases
 
 All releases will be made in both CoffeeScript and JavaScript, and
 available simultaneously on the Bower and RubyGems package managers.
