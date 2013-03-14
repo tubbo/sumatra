@@ -1,5 +1,5 @@
-# The prototype for all jQuery plugins created with the 
-class @SumatraPlugin
+# The prototype for all jQuery plugins created with the Sumatra framework.
+module.exports = class SumatraPlugin
   action: 'one'
   defaults: {}
 

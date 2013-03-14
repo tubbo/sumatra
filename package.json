@@ -22,6 +22,7 @@
   "dependencies": {
     "jquery": "latest",
     "coffee-script": "latest",
-    "underscore": "latest"
+    "underscore": "latest",
+    "stitch": "latest"
   }
 }
