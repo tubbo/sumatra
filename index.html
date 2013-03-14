@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Sumatra by tubbo</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/tubbo/sumatra">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/tubbo/sumatra/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/tubbo/sumatra/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Sumatra</h1>
+          <p>Sumatra is a CoffeeScript framework for making beautiful jQuery plugins.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/tubbo">tubbo</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>Sumatra</h1>
+
+<p>Sumatra is a CoffeeScript framework for writing jQuery plugins harder,
+better, faster, stronger.</p>
+
+<p>You should use Sumatra if you...</p>
+
+<ul>
+<li>Encapsulate complex jQuery plugins in a service object and call an
+instance of that service object for each DOM element the plugin
+selector is passed</li>
+<li>Enjoy test-driven development, clear code, and convention over
+configuration</li>
+<li>Believe unicorns are real</li>
+</ul><h2>Why?</h2>
+
+<p>A lot of jQuery plugins are written to encapsulate a simple bit of
+functionality used throughout the application. But jQuery's syntax was
+designed to improve the way people write JavaScript. CoffeeScript has a
+similar goal, but approaches it from a different angle, it compiles its
+syntax into JavaScript but does so in a safe, syntactically correct and
+(mostly) readable way. This framework unites the two, and finally allows
+jQuery developers to build plugins in CoffeeScript without making their
+code look, well, downright ugly!</p>
+
+<h2>Installation</h2>
+
+<p>We recommend Bower for installing Sumatra as a component:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>bower install sumatra
+</pre></div>
+
+<p>However, you can also install Sumatra manually by just including the
+<code>pkg/sumatra.js</code> file in your javascripts directory.</p>
+
+<h2>Usage</h2>
+
+<p>Sumatra values convention over configuration, and its usage revolves
+around an established pattern that hopefully others will find useful.</p>
+
+<h3>Defining a Basic Plugin</h3>
+
+<p>After loading Sumatra, you can build jQuery plugins that are both clear
+and superbly terse:</p>
+
+<div class="highlight"><pre><span class="nx">sumatra</span> <span class="s">'clickMe'</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  <span class="k">class</span> <span class="nx">ClickMe</span> <span class="k">extends</span> <span class="nx">SumatraPlugin</span>
+    <span class="nv">action: </span><span class="s">'click'</span>
+    <span class="nv">perform: </span><span class="nf">(event) =&gt;</span>
+      <span class="nv">element_id = </span><span class="nx">@element</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span> <span class="o">||</span> <span class="s">'&lt;div&gt;'</span>
+      <span class="nx">alert</span> <span class="s">"You just clicked </span><span class="si">#{</span><span class="nx">element_id</span><span class="si">}</span><span class="s">!"</span>
+</pre></div>
+
+<p>All this plugin does is show an <code>alert()</code> when the element is clicked.
+You can define a single action with <code>action:</code> and then define the
+<code>perform()</code> event handler that binds to whatever action you've set
+on the element.</p>
+
+<p>To bind an element to this event, just call it like any normal
+jQuery plugin:</p>
+
+<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s">'#my_element'</span><span class="p">).</span><span class="nx">clickMe</span><span class="p">();</span>
+</pre></div>
+
+<h3>Parameters</h3>
+
+<p>You can also make plugins that pass in options. All Sumatra plugins
+take an <code>options</code> hash as their only argument, regardless of whether
+the service object uses them or not.</p>
+
+<div class="highlight"><pre><span class="nx">sumatra</span> <span class="s">'ajaxSubmit'</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  <span class="k">class</span> <span class="nx">AjaxSubmit</span> <span class="k">extends</span> <span class="nx">SumatraPlugin</span>
+    <span class="nv">action: </span><span class="s">'submit'</span>
+    <span class="nv">mergeOptions: </span><span class="nf">-&gt;</span>
+      <span class="vi">@defaults = </span><span class="nx">@_getFormDefaults</span><span class="p">()</span>
+      <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">@options</span><span class="p">,</span> <span class="nx">@defaults</span><span class="p">)</span>
+
+    <span class="nv">perform: </span><span class="nf">(event) =&gt;</span>
+      <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">()</span>
+      <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()</span>
+      <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span> <span class="nx">@options</span>
+
+    <span class="nv">_getFormDefaults: </span><span class="nf">-&gt;</span>
+      <span class="p">{</span>
+        <span class="nv">url: </span><span class="nx">@element</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">'action'</span><span class="p">)</span>
+        <span class="nv">type: </span><span class="nx">@element</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">'method'</span><span class="p">)</span>
+        <span class="nv">error: </span><span class="nf">(message, status, xhr) -&gt;</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">xhr</span>
+          <span class="nx">alert</span> <span class="s">"</span><span class="si">#{</span><span class="nx">status</span><span class="si">}</span><span class="s">: </span><span class="si">#{</span><span class="nx">message</span><span class="si">}</span><span class="s">"</span>
+      <span class="p">}</span>
+</pre></div>
+
+<p>This is an example of <a href="http://jquery.malsup.com/form">ajaxSubmit from the jQuery.form plugin</a>,
+implemented using Sumatra. It would especially be useful when rendering
+an inline response with JSON, using something such as Handlebars to
+compile the JSON data into a logic-less client-side template...</p>
+
+<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s">'form'</span><span class="p">).</span><span class="nx">ajaxSubmit</span> <span class="o">\</span>
+  <span class="nv">dataType: </span><span class="s">'json'</span>
+  <span class="nv">success: </span><span class="nf">(context) =&gt;</span>
+    <span class="nv">template = </span><span class="nx">Handlebars</span><span class="p">.</span><span class="nx">compile</span> <span class="nx">$</span><span class="p">(</span><span class="s">'#response_template'</span><span class="p">)</span>
+    <span class="nv">response = </span><span class="nx">template</span><span class="p">(</span><span class="nx">context</span><span class="p">)</span>
+    <span class="nx">@element</span><span class="p">.</span><span class="nx">html</span> <span class="nx">response</span>
+</pre></div>
+
+<h3>Basic Properties</h3>
+
+<p>As a by-product of the jQuery instantation process, each <code>SumatraPlugin</code>
+comes with the following three properties, for free:</p>
+
+<ul>
+<li>
+<strong><a href="https://github.com/element" class="user-mention">@element</a>:</strong> References a single jQuery DOM Object, which can perform
+basic functionality on the page. It is obtained from the collection of
+objects which matched the plugin's selector upon instantiation.</li>
+<li>
+<strong><a href="https://github.com/index" class="user-mention">@index</a>:</strong> The index of the jQuery DOM Object in the collection of
+objects which matched the plugin's selector upon instantiation.</li>
+<li>
+<strong><a href="https://github.com/options" class="user-mention">@options</a>:</strong> A Hash-notated Object obtained as the only argument in
+the jQuery plugin when instantiated. This object is then merged with
+the <code>defaults</code> hash, which are default params in the plugin's
+definition, before initialization occurs.</li>
+</ul><h3>Workflow</h3>
+
+<p>Each SumatraPlugin has a "workflow" that is expressed as a series of
+methods, all run in the <code>constructor</code> of the object. The constructor
+is responsible for setup of the object's basic properties. This method
+should never be overridden, instead, each step of the instantiation
+process can be controlled by overriding one of the following methods:</p>
+
+<ul>
+<li>
+<strong>mergeOptions:</strong> Merge the options with the defaults hash. You can
+override this to use attributes from <code>@element</code> as defaults instead.</li>
+<li>
+<strong>initialize:</strong> The main override of the constructor method, this is
+where one would actually "construct" the objects they are going to be
+using in this plugin instance, bind events, and call helper methods.</li>
+<li>
+<strong>bindEvents:</strong> This is where the <code>action:</code> event should be bound in
+some way. In many cases, this is overridden to bind other events as
+well as the <code>action:</code>, or binding the event as a <code>$(document).on</code>.</li>
+<li>
+<strong>perform:</strong> The event handler of the plugin, this is normally called
+when the <code>action:</code> event is fired, but it must be defined if it is
+called or it will throw an error.</li>
+</ul><p>You can define more methods, but these are the only public methods that
+should be overridden. Any method beginning with <code>_</code> is considered
+"private" and should not be overridden. Please carry this convention
+to your own code as well.</p>
+
+<h2>Development</h2>
+
+<p>You can build this code into JavaScript by running the following
+command at the root dir:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>npm install <span class="o">&amp;&amp;</span> cake build
+</pre></div>
+
+<h3>Contributions</h3>
+
+<p>Contributions will be accepted via Git/GitHub pull requests, as long as
+you write tests that prove your contributions work. We use Jasmine to
+write tests in CoffeeScript (you know, for the actual framework?) and
+RSpec to write tests for the Rails helpers.</p>
+
+<h3>Releases</h3>
+
+<p>All releases will be made in both CoffeeScript and JavaScript, and
+available simultaneously on the Bower and RubyGems package managers.
+We use Bower to manage the standalone JavaScript code which has no
+dependency on Sprockets, Rails, or anything Ruby.</p>
+
+<p>This code is released under the <a href="https://github.com/tubbo/sumatra/blob/master/LICENSE.md">MIT License</a>.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-24749017-3");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
