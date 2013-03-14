@@ -18,5 +18,10 @@
     "coffee-script"
   ],
   "author": "Tom Scott",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "latest",
+    "coffee-script": "latest",
+    "underscore": "latest"
+  }
 }
