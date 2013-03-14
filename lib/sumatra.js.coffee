@@ -1,1 +1,0 @@
-sumatra = require 'sumatra/definition'
