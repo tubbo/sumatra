@@ -1,8 +1,4 @@
 task 'build', "Compile Sumatra", ->
-  stitch = require 'stitch'
-  fs = require 'fs'
-  pkg = stitch.createPackage(paths: [__dirname + '/lib'])
+  exec = require('child_process').exec
 
-  pkg.compile (error, source) ->
-    fs.writeFile 'src/sumatra.js', source, (error) ->
-      throw error if error
+  exec 'coffee --join src/sumatra.js --compile lib/sumatra/*.coffee'
