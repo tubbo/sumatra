@@ -47,14 +47,19 @@ sumatra 'clickMe', ->
     perform: (event) =>
       element_id = @element.attr('id') || '<div>'
       alert "You just clicked #{element_id}!"
-
-$('#some_element').clickMe();
 ```
 
 All this plugin does is show an `alert()` when the element is clicked.
 You can define a single action with `action:` and then define the
 `perform()` event handler that binds to whatever action you've set
 on the element.
+
+To bind an element to this event, just call it like any normal
+jQuery plugin:
+
+```coffeescript
+$('#my_element').clickMe();
+```
 
 ### Parameters
 
@@ -83,7 +88,14 @@ sumatra 'ajaxSubmit', ->
           console.log status, message, xhr
           alert "#{status}: #{message}"
       }
+```
 
+This is an example of [ajaxSubmit from the jQuery.form plugin][jqform],
+implemented using Sumatra. It would especially be useful when rendering
+an inline response with JSON, using something such as Handlebars to
+compile the JSON data into a logic-less client-side template...
+
+```coffeescript
 $('form').ajaxSubmit \
   dataType: 'json'
   success: (context) =>
@@ -91,11 +103,6 @@ $('form').ajaxSubmit \
     response = template(context)
     @element.html response
 ```
-
-This is an example of [ajaxSubmit from the jQuery.form plugin][jqform],
-implemented using Sumatra. It would especially be useful when rendering
-an inline response with JSON, using something such as Handlebars to
-compile the JSON data into a logic-less client-side template.
 
 ### Basic Properties
 
