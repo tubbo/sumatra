@@ -23,17 +23,21 @@ syntax into JavaScript but does so in a safe, syntactically correct and
 jQuery developers to build plugins in CoffeeScript without making their
 code look, well, downright ugly!
 
-## Installation & Usage
+## Installation
 
-We recommend the use of Bower to install Sumatra, but you can just use
-the compiled source code in `src/sumatra.js` and `src/sumatra.min.js`
-in your application.
+We recommend Bower for installing Sumatra as a component:
 
 ```bash
 $ bower install sumatra
 ```
 
-If you're using Ruby on Rails, check out [sumatra-rails][engine]!
+However, you can also install Sumatra manually by just including the
+`pkg/sumatra.js` file in your javascripts directory.
+
+## Usage
+
+Sumatra values convention over configuration, and its usage revolves
+around an established pattern that hopefully others will find useful.
 
 ### Defining a Basic Plugin
 
