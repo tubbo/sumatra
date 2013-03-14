@@ -1,0 +1,22 @@
+{
+  "name": "sumatra",
+  "version": "0.0.1",
+  "description": "Sumatra is a CoffeeScript framework for building beautiful jQuery plugins.",
+  "main": "src/sumatra.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tubbo/sumatra.git"
+  },
+  "keywords": [
+    "jquery",
+    "plugins",
+    "beautiful",
+    "code",
+    "coffee-script"
+  ],
+  "author": "Tom Scott",
+  "license": "MIT"
+}
