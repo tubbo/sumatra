@@ -1,4 +1,4 @@
-exec = require('child_process').exec
+{exec} = require 'child_process'
 
 task 'build:javascript', "Compile Sumatra into JavaScript", ->
   exec 'coffee --join pkg/sumatra.js --compile lib/sumatra/*.coffee'
@@ -14,3 +14,14 @@ task 'build:coffeescript', "Compile Sumatra into CoffeeScript", ->
 task 'build', "Compile Sumatra into both languages", ->
   invoke 'build:coffeescript'
   invoke 'build:javascript'
+
+task 'test', "Run all tests", ->
+  exec "NODE_ENV=test
+    mocha
+    --compilers coffee:coffee-script
+    --require coffee-script
+    --require test/test_helper.js.coffee
+    --colors
+  ", (err, output) ->
+    throw err if err
+    console.log output

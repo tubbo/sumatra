@@ -4,7 +4,8 @@
   "description": "Sumatra is a CoffeeScript framework for building beautiful jQuery plugins.",
   "main": "src/sumatra.js",
   "scripts": {
-    "test": "test"
+    "test": "cake test",
+    "server": "cake build;echo 'Built sumatra to pkg/sumatra.js'"
   },
   "repository": {
     "type": "git",
