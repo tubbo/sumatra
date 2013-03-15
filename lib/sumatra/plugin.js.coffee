@@ -30,9 +30,8 @@ class @SumatraPlugin
     if @action?
       @element.on @action, @perform
 
+  # ## perform(event)
+  #
   # The event binding that handles `action`. Override this with your own
   # method. You must override this method or the `bindEvents` method to
   # get this plugin to do anything.
-  perform: (event) =>
-    target = event.currentTarget
-    throw "Error: `#{target}` has no event binding for '#{action}'."
