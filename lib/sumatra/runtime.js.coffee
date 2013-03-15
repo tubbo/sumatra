@@ -8,6 +8,6 @@
 #           alert 'loaded'
 @sumatra = (plugin_name, plugin_code) ->
   plugin_helper = plugin_code.apply(this)
-  jQuery.fn[plugin_name] =>
+  jQuery.fn[plugin_name] = (options) ->
     @each (index, element) ->
-      new plugin_helper(element, index)
+      new plugin_helper(element, index, options)
