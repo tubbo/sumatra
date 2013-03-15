@@ -10,13 +10,13 @@ class @SumatraPlugin
   constructor: (current_element, index_of_query, init_options) ->
     @element = $(current_element)
     @index = index_of_query
-    @options = _.extend @defaults, @options #@mergeDefaultsWith init_options
+    @options = @mergeDefaultsWith init_options
     @initialize() and @bindEvents()
 
   # Merge `options` hash with the `defaults` as set in the definition
   # of this object. The SumatraPlugin is 
-  mergeDefaultswith: (options) ->
-    
+  mergeDefaultsWith: (options) ->
+    _.extend @defaults, @options
 
   # Run custom constructor code, but blocks instantiation if this method
   # returns `false`. This method was pretty much designed to be overridden.
@@ -30,12 +30,11 @@ class @SumatraPlugin
     if @action?
       @element.on @action, @perform
 
+  # ## perform(event)
+  #
   # The event binding that handles `action`. Override this with your own
   # method. You must override this method or the `bindEvents` method to
   # get this plugin to do anything.
-  perform: (event) =>
-    target = event.currentTarget
-    throw "Error: `#{target}` has no event binding for '#{action}'."
 # Define a Sumatra plugin as a jQuery plugin.
 #
 # Example:
@@ -45,7 +44,8 @@ class @SumatraPlugin
 #         initialize:
 #           alert 'loaded'
 @sumatra = (plugin_name, plugin_code) ->
-  plugin_helper = plugin_code.apply(this)
+  PluginHelper = plugin_code.apply this
+
   jQuery.fn[plugin_name] = (options) ->
     @each (index, element) ->
-      new plugin_helper(element, index, options)
+      new PluginHelper(element, index, options)
