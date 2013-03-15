@@ -36,6 +36,9 @@
     var PluginHelper;
     PluginHelper = plugin_code.apply(this);
     return jQuery.fn[plugin_name] = function(options) {
+      if (options == null) {
+        options = {};
+      }
       return this.each(function(index, element) {
         return new PluginHelper(element, index, options);
       });

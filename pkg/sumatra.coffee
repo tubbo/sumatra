@@ -46,6 +46,6 @@ class @SumatraPlugin
 @sumatra = (plugin_name, plugin_code) ->
   PluginHelper = plugin_code.apply this
 
-  jQuery.fn[plugin_name] = (options) ->
+  jQuery.fn[plugin_name] = (options={}) ->
     @each (index, element) ->
       new PluginHelper(element, index, options)
