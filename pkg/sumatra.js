@@ -15,16 +15,11 @@
       };
       this.element = $(current_element);
       this.index = index_of_query;
-      this.options = init_options;
-      this.mergeOptions() && this.initialize() && this.bindEvents();
+      this.options = _.extend(this.defaults, this.options);
+      this.initialize() && this.bindEvents();
     }
 
-    SumatraPlugin.prototype.mergeOptions = function() {
-      var mergedOptions;
-      mergedOptions = this.defaults;
-      $.extend(mergedOptions, this.options);
-      return this.options = mergedOptions;
-    };
+    SumatraPlugin.prototype.mergeDefaultswith = function(options) {};
 
     SumatraPlugin.prototype.initialize = function() {
       return true;
@@ -47,14 +42,13 @@
   })();
 
   this.sumatra = function(plugin_name, plugin_code) {
-    var plugin_helper,
-      _this = this;
+    var plugin_helper;
     plugin_helper = plugin_code.apply(this);
-    return jQuery.fn[plugin_name](function() {
-      return _this.each(function(index, element) {
-        return new plugin_helper(element, index);
+    return jQuery.fn[plugin_name] = function(options) {
+      return this.each(function(index, element) {
+        return new plugin_helper(element, index, options);
       });
-    });
+    };
   };
 
 }).call(this);
