@@ -1,7 +1,7 @@
 {
   "name": "sumatra",
   "version": "0.0.1",
-  "main": "./src/sumatra.js",
+  "main": "./pkg/sumatra.js",
   "dependencies": {
     "jquery": "~1.9.1",
     "underscore": "~1.4.4",
