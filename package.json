@@ -1,0 +1,23 @@
+{
+  "name": "sumatra",
+  "version": "0.0.2",
+  "description": "A framework for defining beautiful jQuery plugins in CoffeeScript.",
+  "main": "pkg/sumatra.js",
+  "scripts": {
+    "test": "cake test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tubbo/sumatra.git"
+  },
+  "keywords": [
+    "jquery",
+    "plugin",
+    "dsl"
+  ],
+  "author": "Tom Scott",
+  "license": "MIT",
+  "dependencies": {
+    "coffee-script": "~1.6.1"
+  }
+}
