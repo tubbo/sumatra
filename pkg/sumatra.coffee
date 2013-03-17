@@ -14,7 +14,7 @@ class @SumatraPlugin
     @initialize() and @bindEvents()
 
   # Merge `options` hash with the `defaults` as set in the definition
-  # of this object. The SumatraPlugin is 
+  # of this object.
   mergeDefaultsWith: (options) ->
     _.extend @defaults, @options
 
