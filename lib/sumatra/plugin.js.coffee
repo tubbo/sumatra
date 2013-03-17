@@ -20,25 +20,29 @@
 # and merging said options with defaults. You can define the default
 # options for your plugin like so:
 #
-#   sumatra 'clickToGo', ->
-#     class ClickToGo extends SumatraPlugin
-#       action: 'click'
-#       defaults: { to: 'http://google.com' }
-#       perform: (event) =>
-#         if confirm "Are you sure you want to go to #{@options.goTo}?"
-#           window.location = @options.goTo
+#     sumatra 'clickToGo', ->
+#       class ClickToGo extends SumatraPlugin
+#         action: 'click'
+#         defaults: { to: 'http://google.com' }
+#         perform: (event) =>
+#           if confirm "Are you sure you want to go to #{@options.goTo}?"
+#             window.location = @options.goTo
 #
 # Then, when instantiating, just override them.
 #
-#   $('a').clickToGo(to: 'http://yahoo.com');
+#     $('a').clickToGo(to: 'http://yahoo.com');
 #
 # This removes the need for writing that boilerplate options hash extend
 # code every time you write a jQuery plugin that takes options. All
 # plugins defined with `sumatra()` take an optional options hash, which is
 # `{}` by default, in case your plugin doesn't require options.
 class @SumatraPlugin
-  # 
+  # The event to bind to if `perform()` is defined.
   action: 'one'
+
+  # A hash of attributes that are extended with an options hash passed
+  # into the jQuery plugin upon instantiation. Useful for setting up
+  # data that is required.
   defaults: {}
 
   # Instantiate a `SumatraPlugin` and bind it to the current element
@@ -52,7 +56,7 @@ class @SumatraPlugin
     @initialize() and @bindEvents()
 
   # Merge `options` hash with the `defaults` as set in the definition
-  # of this object. The SumatraPlugin is 
+  # of this object.
   mergeDefaultsWith: (options) ->
     _.extend @defaults, @options
 

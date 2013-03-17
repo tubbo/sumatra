@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>plugin.js.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>plugin.js.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h2>SumatraPlugin</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>A prototype object for common actions when defining jQuery plugins
+in the Sumatra framework. It is designed so that you never have to
+override the constructor. Instead, the constructor sets up a common
+method interface for both initialization (which would happen after
+construction) and the binding of events, a common task in jQuery
+plugins. This prototype even handles some of that for you, with
+the default <code>bindEvents()</code> being bound to call the <code>perform()</code>
+method (which must be defined by the object extending <code>SumatraPlugin</code>)
+whenever the element it was constructed with triggers the event
+defined by <code>action</code>.</p>
+<p>So essentially, you can define almost any jQuery plugin using this
+interface, even though the only thing binding it to the <code>sumatra</code>
+function is its constructor that takes 3 parameters.</p>
+<p><code>SumatraPlugin</code> also has facilities for dealing with an options hash
+and merging said options with defaults. You can define the default
+options for your plugin like so:</p>
+<pre><code>sumatra &#39;clickToGo&#39;, -&gt;
+  class ClickToGo extends SumatraPlugin
+    action: &#39;click&#39;
+    defaults: { to: &#39;http://google.com&#39; }
+    perform: (event) =&gt;
+      if confirm &quot;Are you sure you want to go to #{@options.goTo}?&quot;
+        window.location = @options.goTo</code></pre>
+<p>Then, when instantiating, just override them.</p>
+<pre><code>$(&#39;a&#39;).clickToGo(to: &#39;http://yahoo.com&#39;);</code></pre>
+<p>This removes the need for writing that boilerplate options hash extend
+code every time you write a jQuery plugin that takes options. All
+plugins defined with <code>sumatra()</code> take an optional options hash, which is
+<code>{}</code> by default, in case your plugin doesn&#39;t require options.</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="class"><span class="keyword">class</span> @<span class="title">SumatraPlugin</span></span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>The event to bind to if <code>perform()</code> is defined.</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>action: <span class="string">'one'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>A hash of attributes that are extended with an options hash passed
+into the jQuery plugin upon instantiation. Useful for setting up
+data that is required.</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>defaults: {}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Instantiate a <code>SumatraPlugin</code> and bind it to the current element
+with options. This also initiates the workflow.</p>
+<p><strong>DO NOT OVERRIDE!!</strong></p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>constructor: (current_element, index_of_query, init_options) -&gt;
+    <span class="property">@element</span> = $(current_element)
+    <span class="property">@index</span> = index_of_query
+    <span class="property">@options</span> = <span class="property">@mergeDefaultsWith</span> init_options
+    <span class="property">@initialize</span>() <span class="keyword">and</span> <span class="property">@bindEvents</span>()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Merge <code>options</code> hash with the <code>defaults</code> as set in the definition
+of this object.</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>mergeDefaultsWith: (options) -&gt;
+    _.extend <span class="property">@defaults</span>, <span class="property">@options</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Run custom constructor code, but blocks instantiation if this method
+returns <code>false</code>. This method was pretty much designed to be overridden.</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>initialize: -&gt;
+    <span class="literal">true</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Bind the <code>perform()</code> method to the <code>action</code> as set in the definition
+of this plugin. Overriding this method removes the guarantee that
+perform() will be called at all...</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>bindEvents: -&gt;
+    <span class="keyword">if</span> <span class="property">@action</span>?
+      <span class="property">@element</span>.<span class="literal">on</span> <span class="property">@action</span>, <span class="property">@perform</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>The event binding that handles <code>action</code>. Override this with your own
+method. You must override this method or the <code>bindEvents</code> method to
+get this plugin to do anything. It takes a single argument, <code>event</code>,
+which represents the given DOMEvent represented by <code>action</code> as passed
+in by <code>jQuery.on</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>perform: <span class="literal">null</span></pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

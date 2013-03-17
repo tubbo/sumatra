@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Sumatra</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h1">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1>Sumatra</h1>
+<p>Sumatra is a CoffeeScript framework for writing jQuery plugins harder,
+better, faster, stronger.</p>
+<p>You should use Sumatra if you...</p>
+<ul>
+<li>Encapsulate complex jQuery plugins in a service object and call an
+instance of that service object for each DOM element the plugin
+selector is passed</li>
+<li>Enjoy test-driven development, clear code, and convention over
+configuration</li>
+<li>Believe unicorns are real</li>
+</ul>
+<h2>Why?</h2>
+<p>A lot of jQuery plugins are written to encapsulate a simple bit of
+functionality used throughout the application. But jQuery&#39;s syntax was
+designed to improve the way people write JavaScript. CoffeeScript has a
+similar goal, but approaches it from a different angle, it compiles its
+syntax into JavaScript but does so in a safe, syntactically correct and
+(mostly) readable way. This framework unites the two, and finally allows
+jQuery developers to build plugins in CoffeeScript without making their
+code look, well, downright ugly!</p>
+<h2>The Goods</h2>
+<p>
+  You came here for docs, right?
+
+  <ul>
+    <li><a href="plugin.js.html">SumatraPlugin</a></li>
+    <li><a href="runtime.js.html">sumatra()</a></li>
+  </ul>
+</p>
+<h2>Installation</h2>
+<h3>Requirements</h3>
+<ul>
+<li>jQuery</li>
+<li>CoffeeScript if you want to develop it..</li>
+</ul>
+<p>We recommend Bower for installing Sumatra as a component:</p>
+<pre><code class="lang-bash">$ bower install sumatra</code></pre>
+<p>However, you can also install Sumatra manually by just including the
+<code>pkg/sumatra.js</code> file in your javascripts directory.</p>
+<h2>Usage</h2>
+<p>Sumatra values convention over configuration, and its usage revolves
+around an established pattern that hopefully others will find useful.</p>
+<h3>Defining a Basic Plugin</h3>
+<p>After loading Sumatra, you can build jQuery plugins that are both clear
+and superbly terse:</p>
+<pre><code class="lang-coffeescript">sumatra &#39;clickMe&#39;, -&gt;
+class ClickMe extends SumatraPlugin
+action: &#39;click&#39;
+perform: (event) =&gt;
+element_id = @element.attr(&#39;id&#39;) || &#39;&lt;div&gt;&#39;
+alert &quot;You just clicked #{element_id}!&quot;</code></pre>
+<p>All this plugin does is show an <code>alert()</code> when the element is clicked.
+You can define a single action with <code>action:</code> and then define the
+<code>perform()</code> event handler that binds to whatever action you&#39;ve set
+on the element.</p>
+<p>To bind an element to this event, just call it like any normal
+jQuery plugin:</p>
+<pre><code class="lang-coffeescript">$(&#39;#my_element&#39;).clickMe();</code></pre>
+<h3>Parameters</h3>
+<p>You can also make plugins that pass in options. All Sumatra plugins
+take an <code>options</code> hash as their only argument, regardless of whether
+the service object uses them or not.</p>
+<pre><code class="lang-coffeescript">sumatra &#39;ajaxSubmit&#39;, -&gt;
+class AjaxSubmit extends SumatraPlugin
+action: &#39;submit&#39;
+mergeOptions: -&gt;
+@defaults = @_getFormDefaults()
+_.extend(@options, @defaults)
+
+perform: (event) =&gt;
+event.preventDefault()
+event.stopPropagation()
+$.ajax @options
+
+_getFormDefaults: -&gt;
+{
+url: @element.attr(&#39;action&#39;)
+type: @element.attr(&#39;method&#39;)
+error: (message, status, xhr) -&gt;
+console.log status, message, xhr
+alert &quot;#{status}: #{message}&quot;
+}</code></pre>
+<p>This is an example of <a href="http://jquery.malsup.com/form">ajaxSubmit from the jQuery.form plugin</a>,
+implemented using Sumatra. It would especially be useful when rendering
+an inline response with JSON, using something such as Handlebars to
+compile the JSON data into a logic-less client-side template...</p>
+<pre><code class="lang-coffeescript">$(&#39;form&#39;).ajaxSubmit \
+dataType: &#39;json&#39;
+success: (context) =&gt;
+template = Handlebars.compile $(&#39;#response_template&#39;)
+response = template(context)
+@element.html response</code></pre>
+<h3>Basic Properties</h3>
+<p>As a by-product of the jQuery instantation process, each <code>SumatraPlugin</code>
+comes with the following three properties, for free:</p>
+<ul>
+<li><strong>element:</strong> References a single jQuery DOM Object, which can perform
+basic functionality on the page. It is obtained from the collection of
+objects which matched the plugin&#39;s selector upon instantiation.</li>
+<li><strong>index:</strong> The index of the jQuery DOM Object in the collection of
+objects which matched the plugin&#39;s selector upon instantiation.</li>
+<li><strong>options:</strong> A Hash-notated Object obtained as the only argument in
+the jQuery plugin when instantiated. This object is then merged with
+the <code>defaults</code> hash, which are default params in the plugin&#39;s
+definition, before initialization occurs.</li>
+</ul>
+<h3>Workflow</h3>
+<p>Each SumatraPlugin has a &quot;workflow&quot; that is expressed as a series of
+methods, all run in the <code>constructor</code> of the object. The constructor
+is responsible for setup of the object&#39;s basic properties. This method
+should never be overridden, instead, each step of the instantiation
+process can be controlled by overriding one of the following methods:</p>
+<ul>
+<li><strong>mergeOptions:</strong> Merge the options with the defaults hash. You can
+override this to use attributes from <code>@element</code> as defaults instead.</li>
+<li><strong>initialize:</strong> The main override of the constructor method, this is
+where one would actually &quot;construct&quot; the objects they are going to be
+using in this plugin instance, bind events, and call helper methods.</li>
+<li><strong>bindEvents:</strong> This is where the <code>action:</code> event should be bound in
+some way. In many cases, this is overridden to bind other events as
+well as the <code>action:</code>, or binding the event as a <code>$(document).on</code>.</li>
+<li><strong>perform:</strong> The event handler of the plugin, this is normally called
+when the <code>action:</code> event is fired, but it must be defined if it is
+called or it will throw an error.</li>
+</ul>
+<p>You can define more methods, but these are the only public methods that
+should be overridden. Any method beginning with <code>_</code> is considered
+&quot;private&quot; and should not be overridden. Please carry this convention
+to your own code as well.</p>
+<h2>Development</h2>
+<p>You can build this code into JavaScript by running the following
+command at the root dir:</p>
+<pre><code class="lang-bash">$ npm install &amp;&amp; cake build</code></pre>
+<h3>Contributions</h3>
+<p>Contributions will be accepted via Git/GitHub pull requests, as long as
+you write tests that prove your contributions work. We use Jasmine to
+write tests in CoffeeScript (you know, for the actual framework?) and
+RSpec to write tests for the Rails helpers.</p>
+<h3>Releases</h3>
+<p>All releases will be made in both CoffeeScript and JavaScript, and
+available simultaneously on the Bower and RubyGems package managers.
+We use Bower to manage the standalone JavaScript code which has no
+dependency on Sprockets, Rails, or anything Ruby.</p>
+<p>This code is released under the <a href="https://github.com/tubbo/sumatra/blob/master/LICENSE.md">MIT License</a>.</p>
+
+            </div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

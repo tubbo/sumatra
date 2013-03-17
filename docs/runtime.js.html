@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>runtime.js.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>runtime.js.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h2>SumatraRuntime</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Defines a jQuery plugin using a service object with a nice,
+consistent, CoffeeScript-style interface. Plugins can extend
+<code>SumatraPlugin</code>, a prototype that makes defining plugins with
+Sumatra easier.</p>
+<p>The runtime function returns the generated jQuery plugin to the
+global scope so it can be used in your application code.</p>
+<p>Arguments:</p>
+<ul>
+<li><strong>plugin_name:</strong> The jQuery plugin name, called like <code>$(&#39;div&#39;).myPlugin();</code></li>
+<li><strong>plugin_code:</strong> A function that will be executed immediately and must return
+a single object that takes 3 parameters in its constructor. These parameters
+are the <code>element</code> being targeted by jQuery, the <code>index</code> at which it appears
+in the query, and the <code>options</code> hash passed during the instantiation of the
+jQuery plugin.</li>
+</ul>
+<p>Example:</p>
+<pre><code>sumatra &#39;myPlugin&#39;, -&gt;
+  class MyPlugin extends SumatraPlugin
+    action: null
+    initialize:
+      alert &#39;loaded&#39;</code></pre>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="property">@sumatra</span> = (plugin_name, plugin_code) -&gt;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Instantiate a PluginHelper and apply the current scope. This can
+be any object that responds to 3 parameters in its constructor
+and will be set to whatever is returned by <code>plugin_code()</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>PluginHelper = plugin_code.apply <span class="keyword">this</span>
+
+  jQuery.fn[plugin_name] = (options={}) -&gt;
+    <span class="property">@each</span> (index, element) -&gt;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>For each element, create a <code>PluginHelper</code> instance
+of the passed-in <code>plugin_code</code> and apply the jQuery
+plugin parameters to the constructor. </p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="keyword">new</span> PluginHelper(element, index, options)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
