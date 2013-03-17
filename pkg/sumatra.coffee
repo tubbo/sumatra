@@ -26,6 +26,9 @@ class @SumatraPlugin
   # Bind the `perform()` method to the `action` as set in the definition
   # of this plugin. Overriding this method removes the guarantee that
   # perform() will be called at all...
+  #
+  # If `action:` is set to `null`, this method will not bind `perform()` to
+  # anything.
   bindEvents: ->
     if @action?
       @element.on @action, @perform
@@ -35,7 +38,13 @@ class @SumatraPlugin
   # The event binding that handles `action`. Override this with your own
   # method. You must override this method or the `bindEvents` method to
   # get this plugin to do anything.
+  
 # Define a Sumatra plugin as a jQuery plugin.
+#
+# Arguments:
+# - **plugin_name:** The name of the plugin as called from jQuery.
+# - **plugin_code:** A function that returns a single object, which responds
+#                    to a constructor of 3 arguments at least.
 #
 # Example:
 #     sumatra 'myPlugin', ->
@@ -44,8 +53,13 @@ class @SumatraPlugin
 #         initialize:
 #           alert 'loaded'
 @sumatra = (plugin_name, plugin_code) ->
+  # Instantiate a PluginHelper and apply the current scope.
   PluginHelper = plugin_code.apply this
 
+  # Define a jQuery plugin named `plugin_name`.
   jQuery.fn[plugin_name] = (options={}) ->
     @each (index, element) ->
+      # For each element, create a `PluginHelper` instance
+      # of the passed-in `plugin_code` and apply the jQuery
+      # plugin parameters to the constructor. 
       new PluginHelper(element, index, options)
