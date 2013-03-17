@@ -1,3 +1,4 @@
 vendor
 .bowerrc
 node_modules
+components
