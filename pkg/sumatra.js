@@ -28,6 +28,8 @@
       }
     };
 
+    SumatraPlugin.prototype.perform = null;
+
     return SumatraPlugin;
 
   })();

@@ -1,6 +1,6 @@
 {
   "name": "sumatra",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "./pkg/sumatra.js",
   "dependencies": {
     "jquery": "~1.9.1",
