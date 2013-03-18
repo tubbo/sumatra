@@ -1,7 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>proof of concept test - sumatra</title>
+  <title>this is sumatra: a demonstration</title>
+  <link rel="stylesheet" type="text/css" href="components/bootstrap.css/css/bootstrap.min.css" />
+  <style type="text/css">
+    .navbar .brand {
+      font-size: 36px;
+      font-weight: bold;
+    }
+    ol {
+      margin-top: 45px;
+    }
+    ol li {
+      font-size: 16px;
+      margin-bottom: 45px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <h1 class="brand">this is sumatra</h1>
+      </div>
+    </div>
+    <ol type="1">
+      <li>
+        <p>We instantiate the plugin:</p>
+        
+        <pre>
+        sumatra 'clickToAlert', ->
+          class PluginHelper extends SumatraPlugin
+            action: 'click'
+        </pre>
+      </li>
+      <li>
+        <p>An alert dialog should have popped up. This means it was initialized.</p>
+
+        <pre>
+        initialize: ->
+          alert 'initialized'
+          true
+        </pre>
+
+        <p>Remember, you have to return <code>true</code> to make the plugin
+        continue to bind events.</p>
+      </li>
+      <li>
+        <p>
+          Now, when you <a href="#">click here</a>, you should get another alert
+          which confirms the click. This is accomplished with the
+          <code>perform()</code> event:
+        </p>
+
+        <pre>
+        perform: (event) =>
+          event.preventDefault()
+          alert 'clicked'
+        </pre>
+
+        We bound it like so: <code>jQuery -> $('a').clickToAlert()</code>
+      </li>
+    </ol>
+  </div>
   <script src="components/coffee-script/extras/coffee-script.js"></script>
   <script src="components/jquery/jquery.js"></script>
   <script src="components/underscore/underscore.js"></script>
@@ -19,17 +80,5 @@
 
     jQuery -> $('a').clickToAlert()
   </script>
-</head>
-<body>
-  <p>
-    For this to work, you need to:
-
-    <code><pre>
-      bower install coffee-script sumatra
-    </pre></code>
-  </p>
-  <p>
-    <a href="#">click me</a>
-  </p>
 </body>
 </html>

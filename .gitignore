@@ -1,4 +1,2 @@
-vendor
-.bowerrc
 node_modules
-components
+components/sumatra/

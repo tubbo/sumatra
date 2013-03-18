@@ -1,9 +1,20 @@
 {
   "name": "sumatra",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "./pkg/sumatra.js",
   "dependencies": {
     "jquery": "~1.9.1",
-    "underscore": "~1.4.4"
-  }
+    "underscore": "~1.4.4",
+    "bootstrap.css": "~2.1.1"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.6.2"
+  },
+  "ignore": [
+    "components/**",
+    "test/**",
+    "lib/**",
+    "package.json",
+    "index.html"
+  ]
 }
