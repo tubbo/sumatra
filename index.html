@@ -7,6 +7,11 @@
     .navbar .brand {
       font-size: 36px;
       font-weight: bold;
+      margin: 25px 0;
+      padding: 0;
+    }
+    .navbar .brand:hover {
+      text-decoration: underline;
     }
     ol {
       margin-top: 45px;
@@ -21,7 +26,7 @@
   <div class="container">
     <div class="navbar">
       <div class="navbar-inner">
-        <h1 class="brand">this is sumatra</h1>
+        <a class="brand" href="http://github.com/tubbo/sumatra">this is sumatra</a>
       </div>
     </div>
     <ol type="1">
@@ -48,7 +53,7 @@
       </li>
       <li>
         <p>
-          Now, when you <a href="#">click here</a>, you should get another alert
+          Now, when you <a href="#" id="demo">click here</a>, you should get another alert
           which confirms the click. This is accomplished with the
           <code>perform()</code> event:
         </p>
@@ -59,9 +64,16 @@
           alert 'clicked'
         </pre>
 
-        We bound it like so: <code>jQuery -> $('a').clickToAlert()</code>
+        We bound it like so: <code>jQuery -> $('#demo').clickToAlert()</code>
       </li>
     </ol>
+    <div>
+      <h2>get it in</h2>
+
+      <pre>
+      bower install sumatra
+      </pre>
+    </div>
   </div>
   <script src="components/coffee-script/extras/coffee-script.js"></script>
   <script src="components/jquery/jquery.js"></script>
@@ -78,7 +90,7 @@
           event.preventDefault()
           alert 'clicked'
 
-    jQuery -> $('a').clickToAlert()
+    jQuery -> $('#demo').clickToAlert()
   </script>
 </body>
 </html>
