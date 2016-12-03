@@ -18,8 +18,11 @@
   "author": "Tom Scott",
   "license": "MIT",
   "dependencies": {
+    "jquery": "~1.9.1",
+    "underscore": "~1.4.4"
+  },
+  "devDependencies": {
     "coffee-script": "~1.6.1",
-    "docco": "~0.6.1",
-    "bower": "~0.8.5"
+    "docco": "~0.6.1"
   }
 }
